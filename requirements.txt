@@ -24,6 +24,7 @@ numpy==2.4.2
 packaging==26.0
 pandas==2.3.3
 pillow==12.1.1
+plotly==6.7.0
 protobuf==6.33.5
 pyarrow==23.0.1
 pydeck==0.9.1
@@ -47,4 +48,5 @@ tornado==6.5.4
 typing_extensions==4.15.0
 tzdata==2025.3
 urllib3==2.6.3
+watchdog==6.0.0
 zipp==3.23.0
