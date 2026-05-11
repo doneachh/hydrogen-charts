@@ -44,15 +44,21 @@ st.write(
     "The data suggests that PEM has become the workhorse technology for PtX projects in Germany.  Its flexibility, fast response and falling stack costs make it attractive where projects need to follow variable wind and solar generation.  ALK still appears in a meaningful minority of projects, but its share declines as developers prioritise controllability and grid services over purely low upfront cost.  SOEC and AEMWE remain niche, reflecting their higher technical risk and the need for more demonstration experience."
 )
 
-fig = go.Figure()
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[63.2, 81.2, 79.4, 83.3], name="H₂"))
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[5.3, 6.2, 11.8, 0], name="MeOH"))
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[21.1, 6.2, 5.9, 10.0], name="Synfuels"))
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[0, 0, 2.9, 3.3], name="CH₄"))
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[10.5, 0, 0, 0], name="Synthetic hydrocarbons (subset)"))
-fig.add_trace(go.Bar(x=[2021, 2022, 2023, 2024], y=[0, 6.2, 0, 3.3], name="None"))
-fig.update_layout(title="Product focus over time (2021-2024)")
-fig.update_layout(barmode="stack")
+with open('app/data/product-distribution.json') as f:
+    product_distribution = json.load(f)
+
+df = pd.DataFrame(product_distribution).T.fillna(0).reset_index()
+df['index'] = df['index'].astype(int).astype(str)
+df.rename(columns={'index': 'year'}, inplace=True)
+
+fig = px.area(df, x='year', y=df.columns[1:], title='Distribution of Product Output from 2021 to 2024')
+fig.update_xaxes(type='category')
+
+fig.update_layout(
+    xaxis_title='Year',
+    yaxis_title='Number of projects',
+    hovermode='x unified',
+)
 
 st.plotly_chart(fig)
 
@@ -69,20 +75,20 @@ st.write(
     "Cumulatively, almost four out of five PtX projects in Germany target hydrogen as their main product, with a smaller but persistent group exploring liquid e‑fuels, methanol, synthetic hydrocarbons and methane."
 )
 
-with open('app/data/product-distribution.json') as f:
-    product_distribution = json.load(f)
+with open('app/data/total-product-distribution.json') as f:
+    total_product_distribution = json.load(f)
 
-df = pd.DataFrame(product_distribution).T.fillna(0).reset_index()
-df['index'] = df['index'].astype(int).astype(str)
-df.rename(columns={'index': 'year'}, inplace=True)
-
-fig = px.area(df, x='year', y=df.columns[1:], title='Distribution of Product Output from 2021 to 2024')
-fig.update_xaxes(type='category')
+fig = go.Figure(
+    data=[go.Pie(
+        labels=total_product_distribution["labels"],
+        values=total_product_distribution["values"],
+        hole=.3,
+        hovertemplate='<b>%{label}</b><br>Share: %{value}%<extra></extra>',
+    )])
 
 fig.update_layout(
-    xaxis_title='Year',
-    yaxis_title='Capacity in GW',
-    hovermode='x unified',
+    title='Total Distribution of PtX Product Output (2021-2024)',
+    legend_title='PtX Products',
 )
 
 st.plotly_chart(fig)
