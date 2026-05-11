@@ -1,0 +1,6 @@
+{
+    "2021": {"H2": 12, "Synfuels": 4, "Synthetic hydrocarbons": 2, "MeOH": 1},
+    "2022": {"H2": 13, "None": 1, "MeOH": 1, "Synfuels": 1},
+    "2023": {"H2": 27, "MeOH": 4, "Synfuels": 2, "CH₄": 1},
+    "2024": {"H2": 25, "Synfuels": 3, "None": 1, "CH₄": 1}
+}

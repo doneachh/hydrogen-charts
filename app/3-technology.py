@@ -3,6 +3,8 @@ from plotly import graph_objects as go
 import plotly.express as px
 import streamlit as st
 
+import json
+
 st.write("# Technology and Product Analysis")
 
 st.write("## What are projects built with?")
@@ -60,24 +62,22 @@ st.write(
     "Cumulatively, almost four out of five PtX projects in Germany target hydrogen as their main product, with a smaller but persistent group exploring liquid e‑fuels, methanol, synthetic hydrocarbons and methane."
 )
 
-data = {
-    'product': [
-        'H2',
-        'Synfuels (liquid e‑fuels etc.)',
-        'MeOH',
-        'Synthetic hydrocarbons',
-        'CH₄',
-        'None (not specified yet)'
-    ],
-    'percentage': [77.8, 10.1, 6.1, 2, 2, 2]
-}
-df = pd.DataFrame(data)
-fig = px.pie(df, values='percentage', names='product',
-             title='Total distribution of product output from 2021 to 2024')
-fig.update_traces(textposition='inside', textinfo='percent+label')
+with open('app/data/product-distribution.json') as f:
+    product_distribution = json.load(f)
+
+df = pd.DataFrame(product_distribution).T.fillna(0).reset_index()
+df['index'] = df['index'].astype(int).astype(str)
+df.rename(columns={'index': 'year'}, inplace=True)
+
+fig = px.area(df, x='year', y=df.columns[1:], title='Distribution of Product Output from 2021 to 2024')
+fig.update_xaxes(type='category')
+
 fig.update_layout(
-    margin=dict(t=50, b=50, l=50, r=50)  # reduce margins = bigger pie
+    xaxis_title='Year',
+    yaxis_title='Capacity in GW',
+    hovermode='x unified',
 )
+
 st.plotly_chart(fig)
 
 st.caption(
