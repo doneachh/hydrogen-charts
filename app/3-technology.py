@@ -18,7 +18,6 @@ df.rename(columns={'index': 'year'}, inplace=True)
 
 fig = px.area(df, x='year', y=df.columns[1:], title='Elecrolyser Technology over time (2021-2024)')
 fig.update_xaxes(type='category')
-
 fig.update_layout(
     xaxis_title='Year',
     yaxis_title='Number of projects',
@@ -26,7 +25,6 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig)
-
 st.caption(
     "Compare the share of different electrolysis technologies in PtX projects in Germany from 2021 to 2024."
 )
@@ -46,7 +44,6 @@ df.rename(columns={'index': 'year'}, inplace=True)
 
 fig = px.area(df, x='year', y=df.columns[1:], title='Distribution of Product Output from 2021 to 2024')
 fig.update_xaxes(type='category')
-
 fig.update_layout(
     xaxis_title='Year',
     yaxis_title='Number of projects',
@@ -54,7 +51,6 @@ fig.update_layout(
 )
 
 st.plotly_chart(fig)
-
 st.caption(
     "Compare the share of different PtX products in projects in Germany from 2021 to 2024."
 )
@@ -78,21 +74,18 @@ fig = go.Figure(
         hole=.3,
         hovertemplate='<b>%{label}</b><br>Share: %{value}%<extra></extra>',
     )])
-
 fig.update_layout(
     title='Total Distribution of PtX Product Output (2021-2024)',
     legend_title='PtX Products',
 )
 
 st.plotly_chart(fig)
-
 st.caption(
     "Compare the cumulative share of different PtX products in projects in Germany from 2021 to 2024."
 )
 
-st.write(
-    "The combination of PEM dominance and a strong bias toward hydrogen output suggests that German PtX deployments are optimised first for flexible, grid‑coupled H₂ production rather than for complex downstream synthesis routes. Liquid synfuels and methanol appear mainly in smaller project numbers, often in demonstration settings or targeting specific industrial or transport niches."
-)
-st.write(
-    "If this pattern continues, Germany’s near‑term PtX system will look like a hydrogen backbone with smaller satellites of methanol and e‑fuel projects attached to it. For sectors such as aviation or chemical feedstocks, this means that scaling synfuels will depend on how quickly these early, technology‑diverse pilot projects can be de‑risked and replicated."
-)
+st.write("""
+The combination of PEM dominance and a strong bias toward hydrogen output suggests that German PtX deployments are optimised first for flexible, grid‑coupled H₂ production rather than for complex downstream synthesis routes. Liquid synfuels and methanol appear mainly in smaller project numbers, often in demonstration settings or targeting specific industrial or transport niches.
+
+If this pattern continues, Germany’s near‑term PtX system will look like a hydrogen backbone with smaller satellites of methanol and e‑fuel projects attached to it. For sectors such as aviation or chemical feedstocks, this means that scaling synfuels will depend on how quickly these early, technology‑diverse pilot projects can be de‑risked and replicated.
+""")

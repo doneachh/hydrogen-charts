@@ -13,13 +13,11 @@ st.write("# Temporal Trends & Project Lifecycle")
 #     For 2024, 85 projects are again tracked, with 30 appearing only in the 2024 dataset; here 66.7% of these 30 projects reach implementation stages (FID, under construction, or operational). At the capacity level, 2024 stands out: 380.76 MW is realised, corresponding to 61.3% of that year’s planned 621.1 MW capacity and about 22.8% of the 1.67 GW/year required for the 2030 goal.
 #     """)
 
-import plotly.graph_objects as go
-
 x = ["2021", "2022", "2023", "2024"]
 
 fig = go.Figure()
+fig.update_layout(title='"Annual Capacity - Ambition vs Implementation (2021-2024)"')
 fig.update_xaxes(type='category')
-
 fig.add_trace(go.Scatter(
     x=x,
     y=[0.08549, 0.31729, 0.32927, 0.62110],
@@ -30,10 +28,7 @@ fig.add_trace(go.Scatter(
     y=[0.01830, 0.09665, 0.24047, 0.38076],
     name='Implemented cap. GW',
 ))
-
-fig.update_layout(title='"Annual Capacity - Ambition vs Implementation (2021-2024)"')
 st.plotly_chart(fig)
-
 st.caption(
     "Compare annulal planned and implemented PtX capacity in Germany from 2021 to 2024."
 )
@@ -47,17 +42,14 @@ with st.expander("2021 Projects", expanded=True):
     st.write(
         "For 2021 projects, about 77.1% of announced capacity stays in feasibility; only a modest share reaches FID, construction, or operation."
     )
-
 with st.expander("2022 Projects", expanded=True):
     st.write(
         "For 2022 projects, concept plus feasibility still dominate (around 220 MW out of 317.29 MW), but there is a visible increase in FID and under‑construction capacity."
     )
-
 with st.expander("2023 Projects", expanded=True):
     st.write(
         "For 2023 projects, FID capacity peaks at 181 MW and under‑construction reaches 55 MW, while operational capacity begins to appear at 4.47 MW."
     )
-
 with st.expander("2024 Projects", expanded=True):
     st.write(
         "For 2024 projects, total tracked capacity reduces to 169.95 MW, with 118 MW in FID and 148.76 MW under construction, and 39 MW already operational; concept and feasibility categories shrink sharply."
@@ -68,25 +60,21 @@ st.write(
     "Base on projects counts and defines an implementation rate as the sahre of projects thah have moved into implementation stages"
 )
 
-
-colors = ['crimson', 'forestgreen','lightslategray', 'lightslategray']
-
 fig = go.Figure(data=[go.Bar(
     x=list(range(2021, 2025)),
     y=[26.7, 85.7, 64.7, 66.7],
-    marker_color=colors
+    marker_color=['crimson', 'forestgreen','lightslategray', 'lightslategray']
 )])
 fig.update_layout(title_text='Implementation rate evolution (in %)')
 
 st.plotly_chart(fig)
-
 st.caption(
     "Despite this improvement, the capacities behind many projects are modest and a large part of national ambition remains concentrated in early‑stage, high‑capacity projects that do not progress at the same speed"
 )
 
 st.write("""
     Looking at the timelines from 2021 to 2024, a clear pattern emerges: PtX projects in Germany are easy to announce, but hard to build.
-    """)
+""")
 
     # Early years are dominated by feasibility studies 77% of 2021 capacity remains stuck there and only a thin slice reaches construction or operation.
     # By 2023 and 2024, more capacity flows into FID and under‑construction stages, and annual realised capacity rises from 18.3 MW in 2021 to 380.76 MW in 2024.  At the same time, announced capacities for later years spike to more than 1.2 GW before being revised down to 621.1 MW in the 2024 dataset because many projects are delayed, re‑scaled, or dropped.
