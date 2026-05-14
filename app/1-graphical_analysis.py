@@ -1,5 +1,6 @@
 import geopandas as gpd
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
 import pandas as pd
 import pygal
 import streamlit as st
@@ -125,16 +126,17 @@ df_sorted = df.sort_values("Number of announced projects", ascending=True)
 
 st.subheader("Project Distribution")
 
-bar_chart = pygal.HorizontalBar(
-    show_legend=False, print_labels=True, style=pygal.style.LightGreenStyle
-)
-bar_chart.title = "Project Distribution by State"
-for _, row in df_sorted.iterrows():
-    bar_chart.add(
-        row["State name"],
-        [{"value": row["Number of announced projects"], "label": row["State name"]}],
+fig = go.Figure(go.Bar(
+    x=df_sorted["Number of announced projects"],
+    y=df_sorted["State name"],
+    orientation='h',
+    marker=dict(
+        color='mediumseagreen',
+        line=dict(
+            color='seagreen',
+            width=1
+        )
     )
-bar_chart.render()
+))
 
-rendered_bar_chart = bar_chart.render().decode("utf-8")
-st.components.v1.html(rendered_bar_chart, height=520)
+st.plotly_chart(fig)
