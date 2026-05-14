@@ -1,3 +1,4 @@
+import plotly.graph_objects as go
 import pygal
 import streamlit as st
 
@@ -54,13 +55,18 @@ st.write(
     "Base on projects counts and defines an implementation rate as the sahre of projects thah have moved into implementation stages"
 )
 
-bar_chart = pygal.Bar(style=pygal.style.TurquoiseStyle)
-bar_chart.title = "Implementation rate evolution (in %)"
-bar_chart.x_labels = [2021, 2022, 2023, 2024]
-bar_chart.add("Implementation rate", [26.7, 85.7, 64.7, 66.7])
-rendered_bar_chart = bar_chart.render().decode("utf-8")
 
-st.components.v1.html(rendered_bar_chart, height=520)
+colors = ['crimson', 'forestgreen','lightslategray', 'lightslategray']
+
+fig = go.Figure(data=[go.Bar(
+    x=list(range(2021, 2025)),
+    y=[26.7, 85.7, 64.7, 66.7],
+    marker_color=colors
+)])
+fig.update_layout(title_text='Implementation rate evolution (in %)')
+
+st.plotly_chart(fig)
+
 st.caption(
     "Despite this improvement, the capacities behind many projects are modest and a large part of national ambition remains concentrated in early‑stage, high‑capacity projects that do not progress at the same speed"
 )
