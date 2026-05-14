@@ -6,36 +6,6 @@ Image.MAX_IMAGE_PIXELS = 500_000_000
 st.write("# Power-to-X in Germany")
 
 
-st.write("## What is Power-to-X?")
-st.write("""**Power-to-X (PtX)** technologies convert surplus renewable electricity into
-storable and transportable energy carriers such as hydrogen, synthetic fuels,
-and chemicals. These technologies are essential for Germany's energy transition,
-enabling the decarbonization of sectors that cannot be directly electrified,
-including industrial processes, aviation, and long-distance shipping.""")
-
-if "show_image" not in st.session_state:
-    st.session_state.show_image = False
-
-label = "Hide Image" if st.session_state.show_image else "⚡ Click to See PtX Energy Image for more information"
-
-if st.button(label, type="secondary"):
-    st.session_state.show_image = not st.session_state.show_image
-    st.rerun()
-
-if st.session_state.show_image:
-    image_caption = "Image source: Birett, F., Goppel, G., & Toperngpong, F. (2024). PtX - Die Zukunft der Energie im Wasserstoffatlas (Version 1). Zenodo. https://doi.org/10.5281/zenodo.13960175"
-    image_path = Image.open("app/files/ptx.jpg")
-    st.image(image_path, caption=image_caption, width="content")
-
-    # image_url = "https://zenodo.org/records/13960175/files/PTX%20_%20Die%20Zukunft%20der%20Energie%20groß.jpg?download=1"
-    # st.image(image_url, caption=image_caption, width="content")
-
-st.write("## Why It Matters for Germany")
-st.write("""Germany has committed to climate neutrality by 2045 and aims to achieve a 10 GW
-electrolysis capacity by 2030 as part of its National Hydrogen Strategy. PtX
-technologies are critical for achieving these goals while reducing dependence
-on imported fossil fuels and supporting the integration of variable renewable
-energy sources (wind and solar).""")
 
 st.write("### Status Review & Analysis of the Implementation-Ambition Gap (2021-2024)")
 
