@@ -1,9 +1,7 @@
 import streamlit as st
-from PIL import Image
 
-Image.MAX_IMAGE_PIXELS = 500_000_000
 
-st.write("# Power-to-X in Germany")
+st.write(f"# {(translate('abstract.title'))}")
 
 st.write("### Status Review & Analysis of the Implementation-Ambition Gap (2021-2024)")
 
