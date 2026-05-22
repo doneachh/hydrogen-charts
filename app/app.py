@@ -8,18 +8,66 @@ import json
 
 from utils.i18n import tr, SUPPORTED_LANGS
 
+
+# #######################################################################
+# Language Selector #####################################################
+# #######################################################################
 LANG_FLAGS = {"en": "🇬🇧", "de": "🇩🇪"}
 
 def render_language_selector():
-    lang = st.radio(
-        "lang",
-        options=list(LANG_FLAGS.keys()),
-        format_func=lambda x: LANG_FLAGS[x],
-        horizontal=True,
-        label_visibility="collapsed",
-        key="lang"
-    )
-    return lang
+    if "lang" not in st.session_state:
+        st.session_state.lang = "en"
+
+    st.markdown("""
+        <style>
+        /* Force flag row to never wrap on any screen size */
+        [data-testid="stHorizontalBlock"]:has(button[kind="primary"]) {
+            flex-wrap: nowrap !important;
+            gap: 0px !important;
+            width: auto !important;
+        }
+        [data-testid="stHorizontalBlock"]:has(button[kind="primary"]) 
+        > [data-testid="stColumn"] {
+            width: auto !important;
+            min-width: 0 !important;
+            flex: 0 0 auto !important;
+        }
+        [data-testid="stHorizontalBlock"]:has(button[kind="primary"]) 
+        [data-testid="stButton"] button {
+            background: none !important;
+            border: none !important;
+            box-shadow: none !important;
+            padding: 0 2px !important;
+            min-width: 0 !important;
+            font-size: 50rem !important;
+            line-height: 1;
+            opacity: 0.4;
+            transition: opacity 0.2s;
+        }
+        [data-testid="stHorizontalBlock"]:has(button[kind="primary"]) 
+        [data-testid="stButton"] button[kind="primary"] {
+            opacity: 1;
+        }
+        [data-testid="stHorizontalBlock"]:has(button[kind="primary"]) 
+        [data-testid="stButton"] button:hover {
+            opacity: 1;
+            background: none !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+    cols = st.columns(len(LANG_FLAGS))
+    for col, (lang, flag) in zip(cols, LANG_FLAGS.items()):
+        with col:
+            if st.button(
+                flag,
+                key=f"lang_btn_{lang}",
+                type="primary" if st.session_state.lang == lang else "secondary",
+                use_container_width=False,
+            ):
+                st.session_state.lang = lang
+                st.rerun()
+
+    return st.session_state.lang
 
 render_language_selector()
 
